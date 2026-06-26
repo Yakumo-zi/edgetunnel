@@ -1,0 +1,22 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 每天午夜执行
+  workflow_dispatch:      # 允许你手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: main           # 你要同步的目标分支
+          fetch-depth: 0
+      - name: Sync Upstream
+        uses: zhangnew/sync-upstream@v1
+        with:
+          upstream: cmliu/edgetunnel  # 替换为上游仓库的拥有者/仓库名
+          upstream-branch: main  # 上游仓库的分支
+          branch: main          # 你的目标分支
